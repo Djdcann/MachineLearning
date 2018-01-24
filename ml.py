@@ -1,12 +1,13 @@
 import math
 
+#calc euclidian distance
 def edistance(point1, point2, labels):
     d = 0
     for i in labels:
         d += (point1[i] - point2[i])**2
     return math.sqrt(d)
 
-
+#return list of length k of close points
 def guess(inX, dataset, k):
     ed = []
     for i in dataset:
@@ -38,6 +39,7 @@ for i in csv.readlines():
 #print data
 csv.close()
 
+#new value to predict for
 X = {'c': None, 'x': 5.258, 'y':5.068520}
 
 a = guess(X, data, 5)
