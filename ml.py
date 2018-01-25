@@ -1,6 +1,7 @@
-#KNN alg
+# KNN alg
 
 import math
+import csvRead
 
 #calc euclidian distance
 def edistance(point1, point2, labels):
@@ -30,34 +31,35 @@ def guess(inX, dataset, k):
     return {kk: float(v) / k for kk, v in vals.items()}
 
 
-#open csv to read
-csv = open("insects.csv", "r")
+def average(d, k):
+    sum = 0
+    for i in d:
+        sum += float(i[k])
+    return sum / len(d)
 
-data = []
-keys = []
+# gets a set for all properties
+def toSet(d):
+    ret = {}
+    for i in d:
+        for k in i:
+            if k not in ret:
+                ret[k] = set()
+            ret[k].add(i[k])
 
-#collect keys from 1st line and init data
-for i in csv.readline().rstrip().split(','):
-    keys.append(i)
+    return ret
 
-#fill data with values
-for i in csv.readlines():
-    obj = {}
-    for key, val in zip(keys, i.rstrip().split(',')):
-        if key != 'c':
-            obj[key] = float(val)
-        else:
-            obj[key] = val
-    data.append(obj)
 
-#print data
-csv.close()
+data = csvRead.read_csv2('insects.csv')
+print filter(lambda x: x['c'] == 'k', data)
+print average(data, 'x')
+print toSet(data)['c']
+
 
 #new value to predict for
-X = {'c': None, 'x': 1.942, 'y':6.43}
-
-a = guess(X, data, 10)
-
-print a
+# X = {'c': None, 'x': 1.942, 'y':6.43}
+#
+# a = guess(X, data, 10)
+#
+# print a
 
 
