@@ -16,7 +16,7 @@ def guess(inX, dataset, k):
     return ed[:k]
 
 
-
+#open csv to read
 csv = open("insects.csv", "r")
 
 data = []
