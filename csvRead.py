@@ -4,10 +4,7 @@ import runtime_efficiency
 @runtime_efficiency.profile
 def read_csv(path):
     with open(path) as csvfile:
-        data = []
-        for i in csv.DictReader(csvfile):
-            data.append(i)
-        return data
+        return [i for i in csv.DictReader(csvfile)]
 
 # OLD METHOD
 @runtime_efficiency.profile
@@ -27,6 +24,10 @@ def read_csv2(path):
 
     return data
 
+def read_csv3(path):
+    csv = open(path, 'r')
+    s = [{x: y} for x in csv.readline().rstrip().split(',') for c in csv.readlines() for y in c.rstrip().split(',')]
+    print s
 
 def __test():
     for i in xrange(500):
@@ -35,3 +36,5 @@ def __test():
     print d1
     print d2
     runtime_efficiency.print_prof_data()
+
+read_csv3('insects.csv')
