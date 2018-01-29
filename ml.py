@@ -38,21 +38,17 @@ def average(d, k):
     return sum / len(d)
 
 # gets a set for all properties
-def toSet(d):
-    ret = {}
-    for i in d:
-        for k in i:
-            if k not in ret:
-                ret[k] = set()
-            ret[k].add(i[k])
-
-    return ret
+def toDict(data):
+    return {x:[y[x] for y in data] for x in data[0]}
 
 
 data = csvRead.read_csv2('insects.csv')
-print filter(lambda x: x['c'] == 'k', data)
-print average(data, 'x')
-print toSet(data)['c']
+print data
+d2 = {x:[y[x] for y in data] for x in data[0]}
+print set(d2['c'])
+# print filter(lambda x: x['c'] == 'k', data)
+# print average(data, 'x')
+# print toSet(data)['c']
 
 
 #new value to predict for
