@@ -1,5 +1,6 @@
 import csv
 import runtime_efficiency
+import re
 
 @runtime_efficiency.profile
 def read_csv(path):
@@ -19,7 +20,10 @@ def read_csv2(path):
     for i in csv.readlines():
         obj = {}
         for key, val in zip(keys, i.rstrip().split(',')):
-            obj[key] = val
+            if re.match(r'\d*\.?\d+', val):
+                obj[key] = float(val)
+            else:
+                obj[key] = val
         data.append(obj)
 
     return data

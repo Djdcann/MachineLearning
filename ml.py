@@ -1,6 +1,7 @@
 # KNN alg
 
 import math
+import matplotlib.pyplot as plt
 import csvRead
 
 #calc euclidian distance
@@ -43,8 +44,16 @@ def toDict(data):
 
 
 data = csvRead.read_csv2('insects.csv')
+labels = [(x, type(data[0][x])) for x in data[0]]
+print labels
 print data
-d2 = {x:[y[x] for y in data] for x in data[0]}
+d2 = toDict(filter(lambda x:x['c'] == 'k', data))
+dg = toDict(filter(lambda x:x['c'] == 'g', data))
+print d2
+# s3 = {x:[(y['x'], y['y']) for y in filter(lambda i: i['c'] == x, data)] for x in set(d2['c'])}
+# plt.scatter(s3['k'], s3['g'])
+# plt.show()
+# print s3
 print set(d2['c'])
 # print filter(lambda x: x['c'] == 'k', data)
 # print average(data, 'x')
