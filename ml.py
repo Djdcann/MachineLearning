@@ -11,6 +11,14 @@ def edistance(point1, point2, labels):
         d += (point1[i] - point2[i])**2
     return math.sqrt(d)
 
+def entropy(S):
+    s = sum(S)
+    ret = 0
+    for i in S:
+        ret -= (float(i)/s)*math.log(float(i)/s, 2)
+    return ret
+
+
 #return list of length k of close points
 def guess(inX, dataset, k):
     solve_for = None
@@ -55,6 +63,7 @@ print d2
 # plt.show()
 # print s3
 print set(d2['c'])
+print entropy([5,9])
 # print filter(lambda x: x['c'] == 'k', data)
 # print average(data, 'x')
 # print toSet(data)['c']
