@@ -182,3 +182,24 @@ decisionTree(qbFile)
 #print(data_set.head(10))
 
 #    1 model to be trained... split between train and test
+
+
+
+# Graph attributes per position, w/ coloured groups for round. Legend for round pick
+# Display attribute decision ranking for each position
+# Density plot for positions picked per round. Ex: 20% of round 1 picks were QBs or vice versa
+# make the confusion matrix and display accuracies for overall, each position/round
+# Picture of Decision Tree for Poster
+
+
+
+
+# Presentation Outline
+# 1. Intro
+# 2. Problem
+# 3. Our Approach & why (How we cleaned up the data) where its from etc.
+# 4. Numerical Data
+# 4. Graphs / Decision Tree
+
+# 7. Accuracies for 2018 results
+# 8. Final Thoughts (improvements, conclusion, issues we hit)
