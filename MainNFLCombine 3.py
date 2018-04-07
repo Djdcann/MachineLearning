@@ -77,34 +77,6 @@ def readFile(draftFile):
     return [dfNumPyArray, classNumPyArray, original_headers]
 
 
-
-def compareClassifiers(draftFile1):
-    x = 0
-
-    models = []
-    models.append(('LR', linear_model.LogisticRegression()))
-    models.append(('KNN', neighbors.KNeighborsClassifier()))
-    models.append(('CART', tree.DecisionTreeClassifier()))
-
-
-    numpyData1 = readFile(draftFile1)
-    data1Train,data1Test = train_test_split(numpyData1[0], test_size=0.33, random_state=42)
-
-    seed = 6
-    #evaluate each model
-    results = []
-    names = []
-    scoring = 'accuracy'
-    for name, model in models:
-        kfold = model_selection.KFold(n_splits=10, random_state=seed)
-        cv_results = model_selection.cross_val_score(model, data1Test,data1Train , cv=kfold, scoring=scoring)
-        results.append(cv_results)
-        names.append(name)
-        msg = "%s: %f (%f)" % (name, cv_results.mean(), cv_results.std())
-        print(msg)
-
-
-
 #given a draft file, create a decision  tree
 def decisionTree(draftFile):
 
