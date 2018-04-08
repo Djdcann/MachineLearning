@@ -21,7 +21,7 @@ def drop_col_n(df, col_n_to_drop):
 
 
 #path = '/Users/corpa/Documents/classes/machinelearning/Projects/Combine/NFLData/'
-path = '/Users/leeh7/Documents/PythonFiles/NFLML/'
+path = 'D:\\Temp\\NFLML\\'
 #paths to the main .csv files
 wrFile = path + 'draftWRData.csv'
 rbFile = path + 'draftRBData.csv'
@@ -78,12 +78,7 @@ def readFile(draftFile):
 
 
 #given a draft file, create a decision  tree
-def decisionTree(draftFile):
-
-    #read the data
-
-    numpyData = readFile(draftFile)
-
+def decisionTree(numpyData):
     #new Decision Tree
     decisionT = tree.DecisionTreeClassifier()
 
@@ -101,18 +96,13 @@ def decisionTree(draftFile):
     print("---")
     #print(dictionary)
 
-
-
     return decisionT
 
 
 
 
 #create a KNeighborsClassifier with given file draftFileData
-def kNN(draftFile):
-    #read the data
-    numpyData = readFile(draftFile)
-
+def kNN(numpyData):
     #use 5 AT THE MOMENT nearest neighbors (k)
     n_neighbors = 5
 
@@ -131,6 +121,36 @@ def kNN(draftFile):
 def predictKNN(knnModel, rowData):
     return knnModel.predict([rowData])
 
+
+def makegraph(data, title):
+    # creating odd list of K for KNN
+    myList = list(range(1, 50))
+
+    # subsetting just the odd ones
+    n = list(filter(lambda x: x % 2 != 0, myList))
+
+    # empty list that will hold cv scores
+    cv_scores = []
+
+    X_train, X_test, y_train, y_test = model_selection.train_test_split(data[0], data[1], test_size=0.16, random_state=75)
+    # perform 10-fold cross validation
+    for k in n:
+        knn = neighbors.KNeighborsClassifier(n_neighbors=k)
+        scores = model_selection.cross_val_score(knn, X_train, y_train, cv=10, scoring='accuracy')
+        cv_scores.append(scores.mean())
+
+    MSE = [1-x for x in cv_scores]
+
+    # determining best k
+    optimal_k = n[MSE.index(min(MSE))]
+    print("The optimal number of neighbors is {}".format(optimal_k))
+
+    # plot misclassification error vs k
+    plt.plot(n, MSE)
+    plt.title(title)
+    plt.xlabel('Number of Neighbors K')
+    plt.ylabel('Misclassification Error')
+    plt.show()
 #dfWR =
 #dfRB =
 #dfQB =
@@ -140,15 +160,24 @@ def predictKNN(knnModel, rowData):
 wrDataValues = readFile(wrFile)
 rbDataValues = readFile(rbFile)
 qbDataValues = readFile(qbFile)
+d = decisionTree(wrDataValues)
+p = d.predict(wrDataValues[0])
+correct = 0
+for i in range(0,len(p)):
+    if (wrDataValues[1][i] == p[i]):
+        correct += 1
 
+print('Overall Accuracy: {}'.format(correct/len(p)))
+print('Predicted: {}'.format(p[2]))
+makegraph(wrDataValues, 'Wide Reciever KNN Misclassfication Error %')
 #full data_set ... rough
-data_set = pd.DataFrame(wrDataValues).append(pd.DataFrame(rbDataValues)).append(pd.DataFrame(qbDataValues))
-
-#print(data_set.head(10))
-kNN(wrFile)
-decisionTree(wrFile)
-decisionTree(rbFile)
-decisionTree(qbFile)
+# data_set = pd.DataFrame(wrDataValues).append(pd.DataFrame(rbDataValues)).append(pd.DataFrame(qbDataValues))
+#
+# #print(data_set.head(10))
+# kNN(wrFile)
+# decisionTree(wrFile)
+# decisionTree(rbFile)
+# decisionTree(qbFile)
 
 #print(pd.DataFrame(wrDataValues))
 #print(data_set.head(10))
@@ -175,3 +204,5 @@ decisionTree(qbFile)
 
 # 7. Accuracies for 2018 results
 # 8. Final Thoughts (improvements, conclusion, issues we hit)
+
+
