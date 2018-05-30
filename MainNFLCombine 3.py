@@ -4,7 +4,6 @@ from sklearn import neighbors, tree, model_selection
 #from sklearn import model_selection
 from sklearn.tree import export_graphviz
 from sklearn.externals.six import StringIO
-import graphviz
 from sklearn import linear_model #import LogisticRegression
  #import KNeighborsClassifier
 import matplotlib.pyplot as plt
