@@ -168,7 +168,7 @@ for i in range(0,len(p)):
 
 print('Overall Accuracy: {}'.format(correct/len(p)))
 print('Predicted: {}'.format(p[2]))
-makegraph(wrDataValues, 'Wide Reciever KNN Misclassfication Error %')
+makegraph(qbDataValues, 'Quarter Backs KNN Misclassfication Error %')
 #full data_set ... rough
 # data_set = pd.DataFrame(wrDataValues).append(pd.DataFrame(rbDataValues)).append(pd.DataFrame(qbDataValues))
 #
